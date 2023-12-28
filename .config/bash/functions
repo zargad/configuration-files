@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+function join_by
+{
+    local IFS="$1"
+    shift
+    echo "$*"
+}
+export -f join_by
+
+function layout()
+{
+    MONITORS="$(xrandr --listmonitors | awk '{print $4}')"
+    xrandr --output ${MONITORS[$1]} --rotation $2
+}
+export -f layout
+
+function lsansi()
+{
+    COLORS=$(cat .Xresources | awk '{print $2}')
+    i=0
+    for color in $(echo $COLORS | cut -c 11-)
+    do
+        echo -en "\e[0m$i. "
+	echohex $(echo $color | cut -c 2-7)
+	echo "$color"
+        ((i++))
+    done
+}
+export -f lsansi
+
+function cunda_matata()
+{
+	CUDNN_PATH=$(dirname $(python -c "import nvidia.cudnn;print(nvidia.cudnn.__file__)"))
+	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA_PREFIX/lib/:$CUDNN_PATH/lib
+}
+export -f cunda_matata

@@ -1,0 +1,89 @@
+set runtimepath^=$XDG_CONFIG_HOME/vim
+set runtimepath+=$XDG_DATA_HOME/vim
+set runtimepath+=$XDG_CONFIG_HOME/vim/after
+
+set packpath^=$XDG_DATA_HOME/vim,$XDG_CONFIG_HOME/vim
+set packpath+=$XDG_CONFIG_HOME/vim/after,$XDG_DATA_HOME/vim/after
+
+let g:netrw_home = $XDG_DATA_HOME."/vim"
+call mkdir($XDG_DATA_HOME."/vim/spell", 'p')
+
+set backupdir=$XDG_STATE_HOME/vim/backup | call mkdir(&backupdir, 'p')
+set directory=$XDG_STATE_HOME/vim/swap   | call mkdir(&directory, 'p')
+set undodir=$XDG_STATE_HOME/vim/undo     | call mkdir(&undodir,   'p')
+set viewdir=$XDG_STATE_HOME/vim/view     | call mkdir(&viewdir,   'p')
+
+if !has('nvim') | set viminfofile=$XDG_STATE_HOME/vim/viminfo | endif
+
+"vim-plug
+call plug#begin()
+"Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
+Plug 'wellle/context.vim'
+call plug#end()
+
+let g:Hexokinase_refreshEvents = ['InsertLeave']
+let g:Hexokinase_optInPatterns = [
+\	'full_hex',
+\	'triple_hex',
+\	'rgb',
+\	'rgba',
+\	'hsl',
+\	'hsla',
+\	'colour_names'
+\ ]
+let g:Hexokinase_highlighters = ['backgroundfull']
+
+let g:array = [ "vim", "bash", "sh", "css" ]
+
+"Functions
+function! TabToSpace()
+    set tabstop=4
+    set shiftwidth=4
+    set expandtab
+endfunction
+
+function! AddFT(Extention, FT)
+    autocmd BufNewFile,BufRead a:Extention set ft=a:FT
+    if index(g:array, a:FT) >= 0
+        call TabToSpace()
+    endif
+endfunction
+
+"Alternative file types
+autocmd BufNewFile,BufRead *.rasi set ft=css | call TabToSpace()
+"call AddFT("*.rasi", "css")
+
+syntax on
+
+"Dvorak movements
+"set langmap='q,\\,w,.e,pr,yt,fy,gu,ci,ro,lp,/[,=],aa,os,ed,uf,ig,dh,hj,tk,nl,s\\;,-',\\;z,qx,jc,kv,xb,bn,mm,w\\,,v.,z/,[-,]=,\"Q,<W,>E,PR,YT,FY,GU,CI,RO,LP,?{,+},AA,OS,ED,UF,IG,DH,HJ,TK,NL,S:,_\",:Z,QX,JC,KV,XB,BN,MM,W<,V>,Z?
+
+"Dvorak-Classic movements
+set langmap=/q,\\,w,.e,pr,yt,fy,gu,ci,ro,lp,'[,=],aa,os,ed,uf,ig,dh,hj,tk,nl,s\\;,-',\\;z,qx,jc,kv,xb,bn,mm,w\\,,v.,z/,8-,]=,?Q,<W,>E,PR,YT,FY,GU,CI,RO,LP,\"{,+},AA,OS,ED,UF,IG,DH,HJ,TK,NL,S:,_\",:Z,QX,JC,KV,XB,BN,MM,W<,V>,Z?
+
+"runtime! macros/dvorak.vim
+
+" Netrw
+let g:netrw_banner = 0
+let g:netrw_liststyle = 3
+let g:netrw_browse_split = 4
+let g:netrw_winsize = 20
+
+"Custom shortcuts
+inoremap <C-k> <Del>
+inoremap <C-b> <Esc>:s/^/# <CR>i
+inoremap <C-S-b> <Esc>:s/^#\s*/<CR>i
+nnoremap <C-b> :s/^/# <CR>
+nnoremap <C-S-b> :s/^#\s*/<CR>
+nnoremap <C-s> :s//g<Left><Left>
+inoremap <C-s> <Esc>:s//g<Left><Left>
+nnoremap <C-Tab> :call TabToSpace()<CR>
+inoremap <C-Tab> <Esc>:call TabToSpace()<CR>i
+
+set autoindent
+
+" let &t_8f = "\<ESC>[38;2;%lu;%lu;%lum"
+" let &t_8b = "\<ESC>[48;2;%lu;%lu;%lum"
+" set termguicolors
+
+hi Normal guibg=NONE ctermbg=NONE

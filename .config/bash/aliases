@@ -1,0 +1,16 @@
+# Built in
+alias ls='ls --color=auto'
+
+# Common
+alias ll='ls -la'
+alias startx='startx "$XDG_CONFIG_HOME/X11/xinitrc" -- "$XDG_CONFIG_HOME/X11/xserverrc" vt1'
+alias rm='rm -i'
+
+# User made
+alias selfw='> temp && mv temp' 
+alias refresh='. $HOME/.bashrc'
+alias crun='sudo lxc-attach -n workman -- su arki && nohup'
+alias refresh-xterm="xrdb -merge $XDG_CONFIG_HOME/X11/xresources"
+alias vivim="vim $XDG_CONFIG_HOME/vim/vimrc"
+alias dudir='du -h -d 0'
+alias jlacky='sudo -b sh -c "lxc-attach -n forfiet -- sudo -u fiet alacritty &"'

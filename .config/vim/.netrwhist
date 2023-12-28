@@ -1,0 +1,9 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =7
+let g:netrw_dirhist_7='/home/yaki/.config/picom'
+let g:netrw_dirhist_6='/home/yaki/.config/alacritty'
+let g:netrw_dirhist_5='/home/yaki/.config/rofi/config'
+let g:netrw_dirhist_4='/var/lib/lxc/workman'
+let g:netrw_dirhist_3='/home/yaki/.config/polybar'
+let g:netrw_dirhist_2='/usr/share/doc/polybar/examples'
+let g:netrw_dirhist_1='/usr/share/doc/polybar'
